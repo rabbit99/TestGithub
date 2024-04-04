@@ -1,0 +1,14 @@
+name: Check Filenames
+
+on: [push]
+
+jobs:
+  check-filenames:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Check filenames
+        run: |
+          ! git diff --name-only --diff-filter=A origin/main | grep -E " |　|[^ -~｡-ﾟ]" && echo "Filename check passed!" || (echo "Error: Some filenames are not allowed." && exit 1)
