@@ -7,8 +7,13 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3 # 更新到最新版本以確保最佳兼容性
+
+      - name: Setup Node.js 20
+        uses: actions/setup-node@v3
+        with:
+          node-version: "20" # 指定Node.js的版本為20
 
       - name: Check filenames
         run: |
-          ! git diff --name-only --diff-filter=A origin/master | grep -E " |　|[^ -~｡-ﾟ]" && echo "Filename check passed!" || (echo "Error: Some filenames are not allowed." && exit 1)
+          ! git diff --name-only --diff-filter=A origin/main | grep -E " |　|[^ -~｡-ﾟ]" && echo "Filename check passed!" || (echo "Error: Some filenames are not allowed." && exit 1)
